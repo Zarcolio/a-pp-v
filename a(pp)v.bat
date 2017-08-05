@@ -4,16 +4,16 @@ REM This script can freely be re-used and distributed as long as this comment re
 
 IF "%1"=="" goto Empty
 
-SET force=
-IF "%1"=="disable" (
-  ECHO Removing SUBST mappings...
-  ECHO:
-  REG DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v NoDrives /f 2>NUL
-)
-
 FOR %%A IN (C D E F G H I J K L M N O P) DO (
   IF "%1"=="enable"  IF NOT EXIST %%A:\ SUBST %%A: C:\>NUL
   IF "%1"=="disable" SUBST %%A: /D>NUL
+)
+
+SET force=
+IF "%1"=="unhideq" (
+  ECHO Removing SUBST mappings...
+  ECHO:
+  REG DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v NoDrives /f 2>NUL
 )
 
 IF "%1"=="enable" (
@@ -39,8 +39,11 @@ GOTO Die
   ECHO:
   ECHO Use: %~n0%~x0 enable [hideq [force]]
   ECHO Or:  %~n0%~x0 disable
-  ECHO - hideq:	Hides Q: drive, user needs to logon again.
-  ECHO - force:	Forces overwriting registry value.
+  ECHO Or:  %~n0%~x0 unhideq
+  ECHO - Enable/disable: Hides Q: drive, user needs to logon again.
+  ECHO - hideq:          Hides Q: drive, user needs to logon again.
+  ECHO - unhideq:        Unhides Q: drive, user needs to logon again.
+  ECHO - force:          Forces overwriting registry value.
   ECHO:
   PAUSE
   GOTO Die 
