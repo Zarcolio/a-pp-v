@@ -10,11 +10,10 @@ param (
 
 function DriveMapping {
 	Param([char]$letterStart,[char]$LetterEnd,[string]$Method, [bool]$Enabled)
+	
+	$DriveMappings = @()
 		
-	For ([byte]$l = [char]$letterStart; $l -le [char]$LetterEnd; $l++){
-
-		[array]$DriveMappings = @()
-		
+	For ([byte]$l = [char]$letterStart; $l -le [char]$LetterEnd; $l++){	
 		$letter = [char[]]$l
 
 		If ($method.toLower() -eq "subst") {
@@ -36,9 +35,10 @@ function DriveMapping {
 		$output = & cmd.exe /c $DisableDrive
 		
 		If ($Enabled -eq $False) {
+			write-host $DriveMappings
 			If ($DriveMappings -contains $Letter) {
 				$output = & cmd.exe /c $DisableDrive
-				write-host 1111}
+				write-host $DriveMappings}
 		}
 	}
 } 
