@@ -48,5 +48,5 @@ DriveMapping -letterStart 'C' -letterEnd 'P' -Method "subst" -Enabled $True
 
 While (!(Get-PsDrive | Where{$_.Name -eq 'Q'})) {}
 
-Write-Host "Q: detect, removing C: - P:"
+Write-Host "Q: detected, removing C: - P:"
 DriveMapping -letterStart 'C' -letterEnd 'P' -Method "subst" -Enabled $False
