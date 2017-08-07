@@ -32,13 +32,13 @@ GOTO Empty
 
 :Continue1
 FOR %%A IN (C D E F G H I J K L M N O P) DO (
-  IF "%2"=="enable"  IF NOT EXIST %%A:\ %EnableDrive%>NUL
-  IF "%2"=="disable" %DisableDrive%>NUL
+  IF "%2"=="enable"  IF NOT EXIST %%A:\ %EnableDrive%>NUL 2>NUL
+  IF "%2"=="disable" %DisableDrive%>NUL 2>NUL
 )
 
 SET force=
 IF "%2"=="unhideq" (
-  ECHO Removing SUBST mappings...
+  ECHO Removing NoDrives from registry, unhiding Q:
   ECHO:
   REG DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v NoDrives /f 2>NUL
 )
@@ -47,8 +47,9 @@ IF "%2"=="enable" (
 
   IF "%4"=="force" SET force=/f
   IF "%3"=="hideq" (
-    ECHO Adding NoDrives to registry
+    ECHO Adding NoDrives to registry for hiding Q:
 	REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v NoDrives /t REG_DWORD /d 65536 %force%
+	RUNDLL32.EXE USER32.DLL,UpdatePerUserSystemParameters ,1 ,True
   )
   
   ECHO:
