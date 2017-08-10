@@ -4,4 +4,4 @@ This script tries to create drives through P: so the next drive will be Q:, effe
 
 Just type the following command in PowerShell console:
 powershell.exe -exec bypass -Command "IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/intosec-nl/a-pp-v/master/a%5Bpp%5Dv.ps1')"
-
+Or if you suspect invoke-expression is caught, just download the scipt.
